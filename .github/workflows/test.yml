@@ -19,12 +19,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.7"
-    - name: Install tox
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install tox
-    - name: Linting with tox
-      run: tox -e flake8
+    - name: Run pre-commit
+      uses: pre-commit/action@v2.0.0
 
   tests:
     name: Test it!
@@ -41,14 +37,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Run pre-commit
-      uses: pre-commit/action@v2.0.0
-    - name: Install tox and tox-gh-actions
+    - name: Install tox
       run: |
         python -m pip install --upgrade pip
-        python -m pip install tox tox-gh-actions
+        python -m pip install tox
     - name: Testing with tox
-      run: tox
+      run: tox -py
 
   build-doc:
     name: Build the docs
